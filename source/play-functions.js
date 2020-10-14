@@ -5,11 +5,12 @@ import playerPlay from "./player.js";
 let computerPoints=0;
 let playerPoints=0;
 
+
 //function for playing one game. It takes in the value the player selected and the value the computer selected and increments according to who won along with returning a message.
 const playOneGame=()=>{
-  //run computerPlay and set computer's selection equal to computerChoice;
+  //run computerPlay and set computer's selection equal to computerSelection;
   const computerSelection=computerPlay();
-  //run playerPlay and set player's selection equal to playerChoice;
+  //run playerPlay and set player's selection equal to playerSelection;
   const playerSelection=playerPlay();
   //if the computers selection equals the player's selection, Print to screen, "Tie.try again and then run this function again,till we return something"
   if(computerSelection===playerSelection){
@@ -40,14 +41,11 @@ const playOneGame=()=>{
 }
 
 
-
-
-
 //function that plays 5 full rounds of games and returns with a final messasge of who won the entire round.
 const playFullGame=()=>{
   //use for loop to run 5 total games
   for(let game=1;game<=5;game++){
-    //runPlayOneGame with the arguments playerChoice and computerChoice
+    //runPlayOneGame
     playOneGame();
   }
   //Depending on how many total points computerPoints and playerPoints have after 5 rounds, display the appropriate message.
@@ -59,5 +57,6 @@ const playFullGame=()=>{
     return  `You both tied!`
   }
 }
+
 
 export{playFullGame}

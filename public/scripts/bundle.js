@@ -15469,6 +15469,7 @@ exports.default = computerPlay;
 var _playFunctions = __webpack_require__(/*! ./play-functions.js */ "./source/play-functions.js");
 
 console.log((0, _playFunctions.playFullGame)());
+console.log("hi");
 
 /***/ }),
 
