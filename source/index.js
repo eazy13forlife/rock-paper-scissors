@@ -9,30 +9,36 @@ const computerPlay=()=>{
 }
 
 //function for playing one game. It takes in the value the player selected and the value the computer selected.
-const playOneGame=(playerSelection,computerSelection)=>{
-  //if they both selected same thing, increase each of their points by 1 and return the string, "you both tie"
+const playOneGame=()=>{
+  //run computerPlay and set computer's selection equal to computerChoice;
+  const computerSelection=computerPlay();
+  //run playerPlay and set player's selection equal to playerChoice;
+  const playerSelection=playerPlay();
+  //if the computers selection equals the player's selection, Print to screen, "Tie.try again and then run this function again,till we return something"
   if(computerSelection===playerSelection){
-    playerPoints++;
-    computerPoints++;
-    return `You both tie`
-  }else if (computerSelection==="rock"&&playerSelection==="paper".toLowerCase()){
-    playerPoints++
-    return `You win! Paper beats rock!`
-  }else if(computerSelection==="rock"&&playerSelection==="scissors".toLowerCase()){
-    computerPoints++
-    return  `You lose! Rock beats paper!`
-  }else if(computerSelection==="paper"&&playerSelection==="scissors".toLowerCase()){
-    playerPoints++
-    return  `You win! Scissor beats paper!`
-  }else if(computerSelection==="scissors"&&playerSelection==="rock".toLowerCase()){
-    playerPoints++
-    return `You win! Rock beats scissors!`
-  }else if(computerSelection==="paper"&&playerSelection==="rock".toLowerCase()){
-    computerPoints++
-    return `You lose! Paper beats rock!`
-  }else if (computerSelection==="scissors"&&playerSelection==="paper".toLowerCase()){
-    computerPoints++
-    return  `You lose! Scissors beats paper!`
+    console.log(`Tie. Try again`);
+    playOneGame();
+  //otherwise,depending on who won, we will increment their score by one and print a message to the screen
+  }else{
+    if (computerSelection==="rock"&&playerSelection==="paper".toLowerCase()){
+      playerPoints++
+      return `You win! Paper beats rock!`
+    }else if(computerSelection==="rock"&&playerSelection==="scissors".toLowerCase()){
+      computerPoints++
+      return  `You lose! Rock beats paper!`
+    }else if(computerSelection==="paper"&&playerSelection==="scissors".toLowerCase()){
+      playerPoints++
+      return  `You win! Scissor beats paper!`
+    }else if(computerSelection==="scissors"&&playerSelection==="rock".toLowerCase()){
+      playerPoints++
+      return `You win! Rock beats scissors!`
+    }else if(computerSelection==="paper"&&playerSelection==="rock".toLowerCase()){
+      computerPoints++
+      return `You lose! Paper beats rock!`
+    }else if (computerSelection==="scissors"&&playerSelection==="paper".toLowerCase()){
+      computerPoints++
+      return  `You lose! Scissors beats paper!`
+    }
   }
 }
 
@@ -53,12 +59,8 @@ const playerPlay=()=>{
 const playFullGame=()=>{
   //use for loop to run 5 total games
   for(let game=1;game<=5;game++){
-    //run computerPlay and set computer's selection equal to computerChoice;
-    const computerChoice=computerPlay();
-    //run playerPlay and set player's selection equal to playerChoice;
-    const playerChoice=playerPlay();
     //runPlayOneGame with the arguments playerChoice and computerChoice
-    playOneGame(playerChoice,computerChoice)
+    playOneGame();
   }
   //Depending on how many total points computerPoints and playerPoints have after 5 rounds, display the appropriate message.
   if(computerPoints>playerPoints){
