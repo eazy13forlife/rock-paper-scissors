@@ -15434,6 +15434,28 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./source/computer.js":
+/*!****************************!*\
+  !*** ./source/computer.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//function that makes computer randomly selects rock,paper or scissors and then returns that value
+var computerPlay = function computerPlay() {
+  var gameArray = ["rock", "paper", "scissors"];
+  return gameArray[Math.ceil(Math.random() * gameArray.length - 1)];
+};
+exports.default = computerPlay;
+
+/***/ }),
+
 /***/ "./source/index.js":
 /*!*************************!*\
   !*** ./source/index.js ***!
@@ -15444,21 +15466,47 @@ module.exports = g;
 "use strict";
 
 
+var _playFunctions = __webpack_require__(/*! ./play-functions.js */ "./source/play-functions.js");
+
+console.log((0, _playFunctions.playFullGame)());
+
+/***/ }),
+
+/***/ "./source/play-functions.js":
+/*!**********************************!*\
+  !*** ./source/play-functions.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.playFullGame = undefined;
+
+var _computer = __webpack_require__(/*! ./computer.js */ "./source/computer.js");
+
+var _computer2 = _interopRequireDefault(_computer);
+
+var _player = __webpack_require__(/*! ./player.js */ "./source/player.js");
+
+var _player2 = _interopRequireDefault(_player);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//set the points the computer has and the points the player has to 0.  We will increment later based on who wins
 var computerPoints = 0;
 var playerPoints = 0;
 
-//function that makes computer randomly selects rock,paper or scissors and then returns that value
-var computerPlay = function computerPlay() {
-  var gameArray = ["rock", "paper", "scissors"];
-  return gameArray[Math.ceil(Math.random() * gameArray.length - 1)];
-};
-
-//function for playing one game. It takes in the value the player selected and the value the computer selected.
+//function for playing one game. It takes in the value the player selected and the value the computer selected and increments according to who won along with returning a message.
 var playOneGame = function playOneGame() {
   //run computerPlay and set computer's selection equal to computerChoice;
-  var computerSelection = computerPlay();
+  var computerSelection = (0, _computer2.default)();
   //run playerPlay and set player's selection equal to playerChoice;
-  var playerSelection = playerPlay();
+  var playerSelection = (0, _player2.default)();
   //if the computers selection equals the player's selection, Print to screen, "Tie.try again and then run this function again,till we return something"
   if (computerSelection === playerSelection) {
     console.log("Tie. Try again");
@@ -15487,20 +15535,7 @@ var playOneGame = function playOneGame() {
   }
 };
 
-//function that prompts user to enter rock,paper or scissors and returns whatever they entered
-var playerPlay = function playerPlay() {
-  //ask user to choose between rock,paper or scissor and store that value in playerChoice
-  var playerChoice = prompt("Choose rock, paper or scissors");
-  //if user doesn't enter any of those 3 options, re-run this function until they enter one of the options.
-  if (playerChoice !== "rock" && playerChoice !== "paper" && playerChoice !== "scissors") {
-    playerPlay();
-    //otherwise, if they do enter one of the options, return playerChoice
-  } else {
-    return playerChoice;
-  }
-};
-
-//function that plays 5 full rounds of games.
+//function that plays 5 full rounds of games and returns with a final messasge of who won the entire round.
 var playFullGame = function playFullGame() {
   //use for loop to run 5 total games
   for (var game = 1; game <= 5; game++) {
@@ -15517,7 +15552,38 @@ var playFullGame = function playFullGame() {
   }
 };
 
-console.log(playFullGame());
+exports.playFullGame = playFullGame;
+
+/***/ }),
+
+/***/ "./source/player.js":
+/*!**************************!*\
+  !*** ./source/player.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+//function that prompts user to enter rock,paper or scissors and returns whatever they entered
+var playerPlay = function playerPlay() {
+  //ask user to choose between rock,paper or scissor and store that value in playerChoice
+  var playerChoice = prompt("Choose rock, paper or scissors");
+  //if user doesn't enter any of those 3 options, re-run this function until they enter one of the options.
+  if (playerChoice !== "rock" && playerChoice !== "paper" && playerChoice !== "scissors") {
+    playerPlay();
+    //otherwise, if they do enter one of the options, return playerChoice
+  } else {
+    return playerChoice;
+  }
+};
+
+exports.default = playerPlay;
 
 /***/ }),
 
