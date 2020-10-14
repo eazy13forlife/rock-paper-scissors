@@ -1,3 +1,3 @@
-import {playFullGame} from "./play-functions.js"
+import {playFullGame} from "./play-functions.js";
 
-console.log(playFullGame())
+console.log(playFullGame());
