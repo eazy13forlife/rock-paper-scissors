@@ -15468,7 +15468,50 @@ exports.default = computerPlay;
 
 var _playFunctions = __webpack_require__(/*! ./play-functions.js */ "./source/play-functions.js");
 
-console.log((0, _playFunctions.playFullGame)());
+//create a pEl that holds the results of who won and lost
+var pEl = document.querySelector("#game");
+//select the paragraph with id playerScore and store it in playerScorePara;
+var playerScorePara = document.querySelector("#player_score");
+//select the paragraph with id computer_score and store it in computerScorePara;
+var computerScorePara = document.querySelector("#computer_score");
+
+//select all the buttons in our document and store it in buttons
+var buttons = document.querySelectorAll("button");
+
+//for each button, add an event listenr when the user click the button
+buttons.forEach(function (button) {
+  button.addEventListener("click", function (e) {
+    //if total games is 5, just don't end up playing the game.
+    if (_playFunctions.totalGames === 5) {} else {
+      //set playerChoice equal to whatever button the clicked
+      var playerChoice = e.target.innerText;
+      //play one game and set the return value equal to the variable value
+      var value = (0, _playFunctions.playOneGame)(playerChoice);
+      //if total games is equal to 5
+      if (_playFunctions.totalGames === 5) {
+        //if computer scored more points,make the text content of the pEl that message
+        if (_playFunctions.computerPoints > _playFunctions.playerPoints) {
+          pEl.textContent = "Computer chose " + _playFunctions.computerSelection + ". Sorry, the computer won.\n          Computer: " + _playFunctions.computerPoints + ", You: " + _playFunctions.playerPoints + ". ";
+          //if player scored more points,make the text content of the pEl that message
+        } else if (_playFunctions.computerPoints < _playFunctions.playerPoints) {
+          pEl.textContent = "Computer chose " + _playFunctions.computerSelection + ". Yay, you won! Computer: " + _playFunctions.computerPoints + ", You: " + _playFunctions.playerPoints + ".";
+        }
+        //make sure to also update the text content of the playerScore paragraph element
+        playerScorePara.textContent = "Your score: " + _playFunctions.playerPoints + ".";
+        //make sure to also update the text content of the computerScore paragraph element.
+        computerScorePara.textContent = "Computer score: " + _playFunctions.computerPoints + ".";
+        //however, if total games is not yet equal to 5
+      } else {
+        //make the p element text content just the return value of the playOneGame function
+        pEl.textContent = "" + value;
+        //still update the text content of playerScore element with the number of points player has
+        playerScorePara.textContent = "Your score: " + _playFunctions.playerPoints;
+        //still update the text content of computer Score element with the number of points computer has
+        computerScorePara.textContent = "Computer score: " + _playFunctions.computerPoints;
+      }
+    }
+  });
+});
 
 /***/ }),
 
@@ -15485,7 +15528,7 @@ console.log((0, _playFunctions.playFullGame)());
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.playFullGame = undefined;
+exports.computerSelection = exports.totalGames = exports.computerPoints = exports.playerPoints = exports.playOneGame = undefined;
 
 var _computer = __webpack_require__(/*! ./computer.js */ "./source/computer.js");
 
@@ -15501,39 +15544,44 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var computerPoints = 0;
 var playerPoints = 0;
 
+var totalGames = 0;
+var computerSelection = void 0;
+
 //function for playing one game. It takes in the value the player selected and the value the computer selected and increments according to who won along with returning a message.
-var playOneGame = function playOneGame() {
+var playOneGame = function playOneGame(playerSelection) {
   //run computerPlay and set computer's selection equal to computerSelection;
-  var computerSelection = (0, _computer2.default)();
+  exports.computerSelection = computerSelection = (0, _computer2.default)();
   //run playerPlay and set player's selection equal to playerSelection;
-  var playerSelection = (0, _player2.default)();
+  playerSelection = playerSelection.toLowerCase();
   //if the computers selection equals the player's selection, Print to screen, "Tie.try again and then run this function again,till we return something"
   if (computerSelection === playerSelection) {
-    console.log("Tie. Try again");
-    playOneGame();
+    return "Tie. Try again";
     //otherwise,depending on who won, we will increment their score by one and print a message to the screen
   } else {
     if (computerSelection === "rock" && playerSelection === "paper") {
-      playerPoints++;
-      return "You win! Paper beats rock!";
+      exports.totalGames = totalGames += 1;
+      exports.playerPoints = playerPoints += 1;
+      return "You win this round! Computer chose rock!";
     } else if (computerSelection === "rock" && playerSelection === "scissors") {
-      computerPoints++;
-      return "You lose! Rock beats paper!";
+      exports.computerPoints = computerPoints += 1;
+      exports.totalGames = totalGames += 1;
+      return "You lost this round! Computer chose rock!";
     } else if (computerSelection === "paper" && playerSelection === "scissors") {
-      playerPoints++;
-      return "You win! Scissor beats paper!";
+      exports.playerPoints = playerPoints += 1;
+      exports.totalGames = totalGames += 1;
+      return "You win this round! Computer chose paper!";
     } else if (computerSelection === "scissors" && playerSelection === "rock") {
-      playerPoints++;
-      return "You win! Rock beats scissors!";
+      exports.playerPoints = playerPoints += 1;
+      exports.totalGames = totalGames += 1;
+      return "You win this round! Computer chose scissors!";
     } else if (computerSelection === "paper" && playerSelection === "rock") {
-      computerPoints++;
-      return "You lose! Paper beats rock!";
+      exports.computerPoints = computerPoints += 1;
+      exports.totalGames = totalGames += 1;
+      return "You lost this round! Computer chose paper!";
     } else if (computerSelection === "scissors" && playerSelection === "paper") {
-      computerPoints++;
-      return "You lose! Scissors beats paper!";
-    } else {
-      console.log("computerselection:" + computerSelection);
-      playOneGame();
+      exports.computerPoints = computerPoints += 1;
+      exports.totalGames = totalGames += 1;
+      return "You lost this round! Computer chose scissors!";
     }
   }
 };
@@ -15541,7 +15589,7 @@ var playOneGame = function playOneGame() {
 //function that plays 5 full rounds of games and returns with a final messasge of who won the entire round.
 var playFullGame = function playFullGame() {
   //use for loop to run 5 total games
-  for (var game = 1; game <= 5; game++) {
+  for (var game = 1; game <= 1; game++) {
     //runPlayOneGame
     playOneGame();
   }
@@ -15553,7 +15601,11 @@ var playFullGame = function playFullGame() {
   }
 };
 
-exports.playFullGame = playFullGame;
+exports.playOneGame = playOneGame;
+exports.playerPoints = playerPoints;
+exports.computerPoints = computerPoints;
+exports.totalGames = totalGames;
+exports.computerSelection = computerSelection;
 
 /***/ }),
 
