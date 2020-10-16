@@ -15469,7 +15469,6 @@ exports.default = computerPlay;
 var _playFunctions = __webpack_require__(/*! ./play-functions.js */ "./source/play-functions.js");
 
 console.log((0, _playFunctions.playFullGame)());
-console.log("hi");
 
 /***/ }),
 
@@ -15504,9 +15503,9 @@ var playerPoints = 0;
 
 //function for playing one game. It takes in the value the player selected and the value the computer selected and increments according to who won along with returning a message.
 var playOneGame = function playOneGame() {
-  //run computerPlay and set computer's selection equal to computerChoice;
+  //run computerPlay and set computer's selection equal to computerSelection;
   var computerSelection = (0, _computer2.default)();
-  //run playerPlay and set player's selection equal to playerChoice;
+  //run playerPlay and set player's selection equal to playerSelection;
   var playerSelection = (0, _player2.default)();
   //if the computers selection equals the player's selection, Print to screen, "Tie.try again and then run this function again,till we return something"
   if (computerSelection === playerSelection) {
@@ -15514,24 +15513,27 @@ var playOneGame = function playOneGame() {
     playOneGame();
     //otherwise,depending on who won, we will increment their score by one and print a message to the screen
   } else {
-    if (computerSelection === "rock" && playerSelection === "paper".toLowerCase()) {
+    if (computerSelection === "rock" && playerSelection === "paper") {
       playerPoints++;
       return "You win! Paper beats rock!";
-    } else if (computerSelection === "rock" && playerSelection === "scissors".toLowerCase()) {
+    } else if (computerSelection === "rock" && playerSelection === "scissors") {
       computerPoints++;
       return "You lose! Rock beats paper!";
-    } else if (computerSelection === "paper" && playerSelection === "scissors".toLowerCase()) {
+    } else if (computerSelection === "paper" && playerSelection === "scissors") {
       playerPoints++;
       return "You win! Scissor beats paper!";
-    } else if (computerSelection === "scissors" && playerSelection === "rock".toLowerCase()) {
+    } else if (computerSelection === "scissors" && playerSelection === "rock") {
       playerPoints++;
       return "You win! Rock beats scissors!";
-    } else if (computerSelection === "paper" && playerSelection === "rock".toLowerCase()) {
+    } else if (computerSelection === "paper" && playerSelection === "rock") {
       computerPoints++;
       return "You lose! Paper beats rock!";
-    } else if (computerSelection === "scissors" && playerSelection === "paper".toLowerCase()) {
+    } else if (computerSelection === "scissors" && playerSelection === "paper") {
       computerPoints++;
       return "You lose! Scissors beats paper!";
+    } else {
+      console.log("computerselection:" + computerSelection);
+      playOneGame();
     }
   }
 };
@@ -15540,7 +15542,7 @@ var playOneGame = function playOneGame() {
 var playFullGame = function playFullGame() {
   //use for loop to run 5 total games
   for (var game = 1; game <= 5; game++) {
-    //runPlayOneGame with the arguments playerChoice and computerChoice
+    //runPlayOneGame
     playOneGame();
   }
   //Depending on how many total points computerPoints and playerPoints have after 5 rounds, display the appropriate message.
@@ -15548,8 +15550,6 @@ var playFullGame = function playFullGame() {
     return "Computer: " + computerPoints + ", You: " + playerPoints + ". Sorry, the computer won!";
   } else if (computerPoints < playerPoints) {
     return "Computer: " + computerPoints + ", You: " + playerPoints + ". Yay, you won !";
-  } else if (computerPoints === playerPoints) {
-    return "You both tied!";
   }
 };
 
@@ -15575,6 +15575,8 @@ Object.defineProperty(exports, "__esModule", {
 var playerPlay = function playerPlay() {
   //ask user to choose between rock,paper or scissor and store that value in playerChoice
   var playerChoice = prompt("Choose rock, paper or scissors");
+  //change playerChoice to all lowercase so case sensitivity is not an issue;
+  playerChoice = playerChoice.toLowerCase();
   //if user doesn't enter any of those 3 options, re-run this function until they enter one of the options.
   if (playerChoice !== "rock" && playerChoice !== "paper" && playerChoice !== "scissors") {
     playerPlay();
